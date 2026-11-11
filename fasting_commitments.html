@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Prayer & Fasting Commitment | Jesus Enthroned Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0d0221;
+            --accent: #0ec2e6;
+            --light: #eff3c1;
+            --text: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --border: #e0e0e0;
+            --success: #28a745;
+            --warning: #ffc107;
+            --error: #dc3545;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --radius-sm: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a0340 100%);
+            color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(14,194,230,0.1)"/></svg>');
+            background-size: cover;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .main-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .main-card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title i {
+            color: var(--accent);
+            font-size: 1.3rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-label i {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
+
+        .required::after {
+            content: '*';
+            color: var(--error);
+            margin-left: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(14, 194, 230, 0.1);
+        }
+
+        .form-control.error {
+            border-color: var(--error);
+        }
+
+        .form-hint {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            display: block;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .days-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .day-toggle {
+            position: relative;
+            height: 120px;
+        }
+
+        .day-toggle input {
+            display: none;
+        }
+
+        .day-toggle label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: 20px 15px;
+            background: var(--white);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-toggle label:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(14, 194, 230, 0.15);
+        }
+
+        .day-toggle input:checked+label {
+            background: linear-gradient(135deg, var(--accent) 0%, #0aa8c9 100%);
+            border-color: var(--accent);
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(14, 194, 230, 0.3);
+        }
+
+        .day-toggle input:checked+label .day-icon {
+            color: var(--white);
+        }
+
+        .day-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .day-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+
+
+        .member-lookup {
+            background: rgba(14, 194, 230, 0.05);
+            border: 2px dashed rgba(14, 194, 230, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 25px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .member-lookup h4 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .lookup-inputs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .lookup-inputs .form-group {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 0;
+        }
+
+        .lookup-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 30px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lookup-btn:hover {
+            background: #1a0340;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(13, 2, 33, 0.2);
+        }
+
+        .lookup-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--white);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .member-found {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid var(--success);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .member-found.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .member-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .member-detail {
+            padding: 12px;
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        .member-detail label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .member-detail span {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid var(--border);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent) 0%, #0aa8c9 100%);
+            color: var(--white);
+            border: none;
+            padding: 18px 50px;
+            border-radius: var(--radius-sm);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 15px rgba(14, 194, 230, 0.3);
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(14, 194, 230, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .message {
+            background: var(--white);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            animation: slideIn 0.3s ease;
+            transform: translateX(100%);
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .message.success {
+            border-left-color: var(--success);
+        }
+
+        .message.error {
+            border-left-color: var(--error);
+        }
+
+        .message-icon {
+            font-size: 1.5rem;
+            margin-top: 2px;
+        }
+
+        .message-success .message-icon {
+            color: var(--success);
+        }
+
+        .message-error .message-icon {
+            color: var(--error);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--primary);
+        }
+
+        .message-close {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0;
+            }
+
+            .main-card {
+                padding: 25px 20px;
+                margin: 0 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .days-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .lookup-inputs {
+                flex-direction: column;
+            }
+
+            .lookup-inputs .form-group {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .days-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .day-toggle {
+                height: 100px;
+            }
+
+            .submit-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Chain Prayer & Fasting</h1>
+            <p class="subtitle">Join us in Chain prayer and fasting </p>
+        </div>
+
+        <div class="main-card">
+            <form id="fastingForm">
+                <!-- Member Lookup Section -->
+                <div class="member-lookup">
+                    <h4><i class="fas fa-user-check"></i> Member Verification (Optional)</h4>
+                    <p class="form-hint">If you're already a member, enter your email or phone to auto-fill your details
+                    </p>
+
+                    <div class="lookup-inputs">
+                        <div class="form-group">
+                            <label for="lookup_email" class="form-label"><i class="fas fa-envelope"></i> Email</label>
+                            <input type="email" id="lookup_email" class="form-control"
+                                placeholder="your.email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="lookup_phone" class="form-label"><i class="fas fa-phone"></i> Phone</label>
+                            <input type="tel" id="lookup_phone" class="form-control" placeholder="0712 345 678">
+                        </div>
+                    </div>
+
+                    <button type="button" id="lookupBtn" class="lookup-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Lookup Member</span>
+                    </button>
+                </div>
+
+                <!-- Member Found Display -->
+                <div id="memberFound" class="member-found">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h5 style="color: var(--success); margin: 0;"><i class="fas fa-check-circle"></i> Member Found!
+                        </h5>
+                        <button type="button" onclick="clearLookup()"
+                            style="background: none; border: none; color: var(--text-light); cursor: pointer;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <p>Your details have been auto-filled. Please verify and select your fasting days.</p>
+
+                    <div class="member-details">
+                        <div class="member-detail">
+                            <label>Member ID</label>
+                            <span id="found_member_id">-</span>
+                        </div>
+                        <div class="member-detail">
+                            <label>Name</label>
+                            <span id="found_name">-</span>
+                        </div>
+                        <div class="member-detail">
+                            <label>Email</label>
+                            <span id="found_email">-</span>
+                        </div>
+                        <div class="member-detail">
+                            <label>Phone</label>
+                            <span id="found_phone">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personal Information -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-user"></i> Personal Information</h2>
+
+                    <div class="form-group">
+                        <label for="name" class="form-label required"><i class="fas fa-user-circle"></i> Full
+                            Name</label>
+                        <input type="text" id="name" name="name" class="form-control" required
+                            placeholder="Enter your full name">
+                        <div class="error-message" id="name-error">Please enter your full name</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="form-label required"><i class="fas fa-envelope"></i> Email
+                            Address</label>
+                        <input type="email" id="email" name="email" class="form-control" required
+                            placeholder="your.email@example.com">
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="form-label required"><i class="fas fa-phone"></i> Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="form-control" required
+                            placeholder="0712 345 678">
+                        <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+                    </div>
+
+                    <!-- Hidden member_id field -->
+                    <input type="hidden" id="member_id" name="member_id" value="">
+                </div>
+
+                <!-- Fasting Days Selection -->
+                <div class="form-section">
+                    <h2 class="section-title"><i class="fas fa-calendar-alt"></i> Select Your Fasting Days</h2>
+                    <p class="form-hint">Choose the days you'll commit to prayer and fasting. Select at least one day.
+                    </p>
+
+                    <div class="days-grid">
+                        <!-- Monday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="monday" name="monday">
+                            <label for="monday">
+                                <i class="fas fa-sun day-icon"></i>
+                                <span class="day-name">Monday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Tuesday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="tuesday" name="tuesday">
+                            <label for="tuesday">
+                                <i class="fas fa-cloud-sun day-icon"></i>
+                                <span class="day-name">Tuesday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Wednesday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="wednesday" name="wednesday">
+                            <label for="wednesday">
+                                <i class="fas fa-cloud day-icon"></i>
+                                <span class="day-name">Wednesday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Thursday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="thursday" name="thursday">
+                            <label for="thursday">
+                                <i class="fas fa-cloud-rain day-icon"></i>
+                                <span class="day-name">Thursday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Friday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="friday" name="friday">
+                            <label for="friday">
+                                <i class="fas fa-cross day-icon"></i>
+                                <span class="day-name">Friday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Saturday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="saturday" name="saturday">
+                            <label for="saturday">
+                                <i class="fas fa-star day-icon"></i>
+                                <span class="day-name">Saturday</span>
+
+                            </label>
+                        </div>
+
+                        <!-- Sunday -->
+                        <div class="day-toggle">
+                            <input type="checkbox" id="sunday" name="sunday">
+                            <label for="sunday">
+                                <i class="fas fa-church day-icon"></i>
+                                <span class="day-name">Sunday</span>
+
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="error-message" id="days-error" style="margin-top: 15px;">Please select at least one
+                        fasting day</div>
+                </div>
+
+                <!-- Submit Section -->
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-pray"></i>
+                        <span>Submit Commitment</span>
+                    </button>
+                    <p class="form-hint" style="margin-top: 15px;">
+                        Your commitment will be recorded for prayer covering and coordination
+                    </p>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>&copy;
+                <?php echo date('Y'); ?> Jesus Enthroned Network. All rights reserved.
+            </p>
+            <p>For inquiries, contact: <a
+                    href="mailto:prayer@jesusthronednetwork.org">prayer@jesusthronednetwork.org</a></p>
+        </div>
+    </div>
+
+    <!-- Message Container -->
+    <div class="message-container" id="messageContainer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('fastingForm');
+            const lookupBtn = document.getElementById('lookupBtn');
+            const memberFound = document.getElementById('memberFound');
+            const daysError = document.getElementById('days-error');
+            const dayCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            // Day selection validation
+            function validateDays() {
+                const selectedDays = Array.from(dayCheckboxes).some(cb => cb.checked);
+                daysError.classList.toggle('show', !selectedDays);
+                return selectedDays;
+            }
+
+            // Update day selection validation on change
+            dayCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', validateDays);
+            });
+
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+
+                // Name validation
+                const name = document.getElementById('name').value.trim();
+                if (!name) {
+                    document.getElementById('name-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('name-error').classList.remove('show');
+                }
+
+                // Email validation
+                const email = document.getElementById('email').value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    document.getElementById('email-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('email-error').classList.remove('show');
+                }
+
+                // Phone validation
+                const phone = document.getElementById('phone').value.trim();
+                if (!phone || phone.length < 10) {
+                    document.getElementById('phone-error').classList.add('show');
+                    isValid = false;
+                } else {
+                    document.getElementById('phone-error').classList.remove('show');
+                }
+
+                // Days validation
+                if (!validateDays()) {
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            // Show message function
+            function showMessage(title, text, type = 'info') {
+                const container = document.getElementById('messageContainer');
+                const message = document.createElement('div');
+                message.className = `message message-${type}`;
+                message.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} message-icon"></i>
+                    <div class="message-content">
+                        <div class="message-title">${title}</div>
+                        <div>${text}</div>
+                    </div>
+                    <button class="message-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                container.appendChild(message);
+
+                // Auto-remove after 5 seconds
+                setTimeout(() => {
+                    if (message.parentNode) {
+                        message.remove();
+                    }
+                }, 5000);
+            }
+
+            // Member lookup function
+            lookupBtn.addEventListener('click', async function () {
+                const email = document.getElementById('lookup_email').value.trim();
+                const phone = document.getElementById('lookup_phone').value.trim();
+
+                if (!email && !phone) {
+                    showMessage('Error', 'Please enter either email or phone number', 'error');
+                    return;
+                }
+
+                // Show loading state
+                const originalText = lookupBtn.innerHTML;
+                lookupBtn.innerHTML = '<span class="loading-spinner"></span> Looking up...';
+                lookupBtn.disabled = true;
+
+                try {
+                    const formData = new FormData();
+                    if (email) formData.append('email', email);
+                    if (phone) formData.append('phone', phone);
+                    formData.append('action', 'lookup_member');
+
+                    const response = await fetch('fasting_handler.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success && data.member) {
+                        // Auto-fill form fields
+                        document.getElementById('member_id').value = data.member.id || '';
+                        document.getElementById('name').value = data.member.name || '';
+                        document.getElementById('email').value = data.member.email || email;
+                        document.getElementById('phone').value = data.member.phone || phone;
+
+                        // Update member found display
+                        document.getElementById('found_member_id').textContent = data.member.id || 'N/A';
+                        document.getElementById('found_name').textContent = data.member.name || '-';
+                        document.getElementById('found_email').textContent = data.member.email || '-';
+                        document.getElementById('found_phone').textContent = data.member.phone || '-';
+
+                        memberFound.classList.add('show');
+                        showMessage('Member Found', 'Your details have been auto-filled successfully!', 'success');
+                    } else {
+                        showMessage('Not Found', data.message || 'No member found with these details. Please enter your information manually.', 'info');
+                    }
+                } catch (error) {
+                    console.error('Lookup error:', error);
+                    showMessage('Error', 'An error occurred during lookup. Please try again.', 'error');
+                } finally {
+                    // Restore button state
+                    lookupBtn.innerHTML = originalText;
+                    lookupBtn.disabled = false;
+                }
+            });
+
+            // Clear lookup function
+            window.clearLookup = function () {
+                document.getElementById('lookup_email').value = '';
+                document.getElementById('lookup_phone').value = '';
+                document.getElementById('member_id').value = '';
+                memberFound.classList.remove('show');
+            };
+
+            // Form submission
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                if (!validateForm()) {
+                    showMessage('Validation Error', 'Please fix the errors in the form before submitting.', 'error');
+                    return;
+                }
+
+                // Show loading state on submit button
+                const submitBtn = form.querySelector('.submit-btn');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="loading-spinner"></span> Submitting...';
+                submitBtn.disabled = true;
+
+                try {
+                    // Prepare form data
+                    const formData = new FormData(form);
+                    formData.append('action', 'submit_commitment');
+
+                    // Get selected days
+                    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+                    days.forEach(day => {
+                        formData.append(day, document.getElementById(day).checked ? '1' : '0');
+                    });
+
+                    const response = await fetch('fasting_handler.php', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showMessage('Success', data.message || 'Your commitment has been recorded successfully!', 'success');
+                        form.reset();
+                        memberFound.classList.remove('show');
+
+                        // Reset checkboxes
+                        dayCheckboxes.forEach(cb => cb.checked = false);
+
+                        // Scroll to top
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    } else {
+                        showMessage('Error', data.message || 'Failed to submit commitment. Please try again.', 'error');
+                    }
+                } catch (error) {
+                    console.error('Submission error:', error);
+                    showMessage('Error', 'An error occurred while submitting. Please try again.', 'error');
+                } finally {
+                    // Restore button state
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+
+            // Real-time validation
+            ['name', 'email', 'phone'].forEach(field => {
+                document.getElementById(field).addEventListener('input', function () {
+                    if (this.value.trim()) {
+                        document.getElementById(`${field}-error`).classList.remove('show');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

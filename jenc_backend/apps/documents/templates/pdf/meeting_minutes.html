@@ -1,0 +1,74 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Minutes — {{ meeting.mname|default:"Meeting Record" }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">{{ meeting.mname|default:"Official Meeting Minutes" }}</h2>
+  <p class="doc-subtitle">
+    <strong>Type:</strong> {{ meeting.meeting_type.name|default:"General Meeting" }} &bull;
+    <strong>Date:</strong> {{ meeting.mdate|date:"l, F j, Y"|default:"TBD" }} &bull;
+    <strong>Time:</strong> {{ meeting.start_time|default:"TBD" }} - {{ meeting.end_time|default:"TBD" }}
+    {% if meeting.facilitator_name %}
+      &bull; <strong>Facilitator:</strong> {{ meeting.facilitator_name }}
+    {% endif %}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <!-- Quick Meeting Overview Strip -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">{{ attendees|length|default:0 }}</div>
+      <div class="kpi-label">Recorded Attendees</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ meeting.meeting_type.name|default:"General" }}</div>
+      <div class="kpi-label">Category</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ generated_at|date:"M j, Y" }}</div>
+      <div class="kpi-label">Report Generated</div>
+    </div>
+  </div>
+
+  <!-- Minutes Body / Resolutions -->
+  <div class="section-title">Meeting Minutes &amp; Resolutions</div>
+  <div class="prose" style="background: #ffffff; padding: 12px; border: 1px solid var(--border); border-radius: 6px; min-height: 140px; margin-bottom: 20px;">
+    {% if minutes.notes or minutes.content %}
+      {{ minutes.notes|default:minutes.content|safe }}
+    {% elif minutes %}
+      {{ minutes|safe }}
+    {% else %}
+      <p style="color: var(--text-muted); font-style: italic;">No recorded minutes or secretarial notes have been logged for this meeting.</p>
+    {% endif %}
+  </div>
+
+  <!-- Attendee Roll -->
+  <div class="section-title">Attendees Roll Call ({{ attendees|length|default:0 }})</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 6%;">#</th>
+        <th style="width: 35%;">Member / Attendee Name</th>
+        <th style="width: 25%;">Phone / Contact</th>
+        <th style="width: 20%;">Check-in Time</th>
+        <th style="width: 14%;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for att in attendees %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><strong>{{ att.member_name|default:"Anonymous Attendee" }}</strong></td>
+          <td>{{ att.phone_number|default:"—" }}</td>
+          <td>{{ att.check_in_time|date:"H:i A"|default:"Checked-in" }}</td>
+          <td><span class="badge badge-success">Present</span></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 14px;">No attendees checked into this meeting session.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

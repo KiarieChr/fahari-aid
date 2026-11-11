@@ -1,0 +1,37 @@
+[28-Aug-2026 04:07:18 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:07:19 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:07:22 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:07:26 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:07:56 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:07:58 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:08:00 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:08:04 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'p.added_date' in 'field list'
+[28-Aug-2026 04:14:29 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:14:31 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:14:33 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:14:37 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:16:34 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:16:43 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:16:45 Africa/Nairobi] Receivables API error: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'm.full_name' in 'field list'
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $isunicode in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 1998
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $isunicode in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2024
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $setbom in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2040
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $setbom in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2060
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $str in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2077
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $str in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2093
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $tagvspaces follows optional parameter $default_css in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_static.php on line 1139
+[28-Aug-2026 04:21:39 Africa/Nairobi] PHP Deprecated:  Required parameter $k follows optional parameter $points in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_static.php on line 2488
+[12-Sep-2026 15:17:11 Africa/Nairobi] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\jen\api\config.php on line 52
+[12-Sep-2026 17:55:52 Africa/Nairobi] PHP Warning:  Undefined array key "REQUEST_METHOD" in C:\xampp\htdocs\jen\api\config.php on line 52
+[12-Sep-2026 18:00:40 Africa/Nairobi] PHP Fatal error:  Uncaught Error: Call to undefined function validateJWT() in C:\xampp\htdocs\jen\api\finance\download_document_pdf.php:13
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\jen\api\finance\download_document_pdf.php on line 13
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $isunicode in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 1998
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $isunicode in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2024
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $setbom in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2040
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $setbom in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2060
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $str in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2077
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $currentfont follows optional parameter $str in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_fonts.php on line 2093
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $tagvspaces follows optional parameter $default_css in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_static.php on line 1139
+[12-Sep-2026 18:04:12 Africa/Nairobi] PHP Deprecated:  Required parameter $k follows optional parameter $points in C:\xampp\htdocs\jen\tcpdf\include\tcpdf_static.php on line 2488

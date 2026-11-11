@@ -1,0 +1,86 @@
+<?php
+require '../includes/connection.php'; // Include database connection
+include '../includes/sweetalert.html';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") { 
+        $name = $_POST['name'];
+        try {
+            $stmt = $db->prepare("INSERT INTO meeting_type (type) VALUES (:name)");
+          
+            $stmt->execute([
+                ':name' => $name
+            ]);    
+            echo "<script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    title: 'Meeting Category Added Successfully',
+                                    text: 'Successful.. Redirecting...',
+                                    type: 'success',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: '#57a94f'
+                                }); 
+                                setTimeout(function() {
+                                    window.location.href = '../meetings.php';
+                                }, 2000);
+                            });
+                        </script>";
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) { // Unique constraint error
+                echo " <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                Swal.fire({
+                                    title: 'An Error Occured',
+                                    text: 'Check if you have duplicated',
+                                    type: 'error',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK',
+                                    confirmButtonColor: '#57a94f'
+                                }); 
+                                setTimeout(function() {
+                                    window.history.back();
+                                }, 5000);
+                            });
+                        </script>";
+                    
+                    
+                }
+                 else {
+                    echo " <script>
+                    document.addEventListener('DOMContentLoaded', function() 
+                    {
+                        Swal.fire({
+                            title: 'Database Error',
+                            text: 'Couldn\'t Connect to the Database Redirecting back for you to check',
+                            type: 'error',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#57a94f'
+                        }); 
+                        setTimeout(function() {
+                            window.history.back();
+                        }, 5000);
+                    });
+                </script>";
+            }
+        }
+    }
+    
+else 
+{
+    echo "<script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            Swal.fire({
+                                title: 'Invalid Request',
+                                text: 'Could not authenticate your Request',,
+                                icon: 'warning',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#57a94f'
+                            }); 
+                            setTimeout(function() {
+                                window.history.back();
+                            }, 5000);
+                        });
+                    </script>";
+                } 
+?>

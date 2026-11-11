@@ -1,0 +1,116 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Member 360 Dossier — {{ member.full_name|default:member.names|default:"Member" }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">{{ member.full_name|default:member.names }}</h2>
+  <p class="doc-subtitle">
+    <strong>Member ID:</strong> #{{ member.id }} &bull;
+    <strong>Cell / Fellowship:</strong> {{ member.cell_group|default:member.fellowship|default:"Unassigned" }} &bull;
+    <strong>Status:</strong> {{ member.status|default:"Active Member" }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <!-- Member Profile Details Grid -->
+  <table class="data-table" style="margin-top: 0; margin-bottom: 20px;">
+    <tbody>
+      <tr>
+        <td style="width: 25%; background: var(--bg-muted); font-weight: 600;">Phone Number</td>
+        <td style="width: 25%;">{{ member.phone_number|default:member.phone|default:"—" }}</td>
+        <td style="width: 25%; background: var(--bg-muted); font-weight: 600;">Email Address</td>
+        <td style="width: 25%;">{{ member.email|default:"—" }}</td>
+      </tr>
+      <tr>
+        <td style="background: var(--bg-muted); font-weight: 600;">Gender / Marital</td>
+        <td>{{ member.gender|default:"—" }} / {{ member.marital_status|default:"—" }}</td>
+        <td style="background: var(--bg-muted); font-weight: 600;">Residence / Estate</td>
+        <td>{{ member.residence|default:member.estate|default:"—" }}</td>
+      </tr>
+      <tr>
+        <td style="background: var(--bg-muted); font-weight: 600;">Date Joined</td>
+        <td>{{ member.date_joined|date:"M j, Y"|default:"—" }}</td>
+        <td style="background: var(--bg-muted); font-weight: 600;">Department / Ministry</td>
+        <td>{{ member.department|default:member.ministry|default:"General Assembly" }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Attendance & Giving Scorecards -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">{{ attendance_stats.total_attended|default:0 }}</div>
+      <div class="kpi-label">Services Attended</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: #16a34a;">{{ attendance_stats.attendance_rate|default:"0" }}%</div>
+      <div class="kpi-label">Attendance Reliability</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ branding.currency_symbol }} {{ pledges.total_pledged|default:"0" }}</div>
+      <div class="kpi-label">Total Pledged</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: var(--primary);">{{ branding.currency_symbol }} {{ pledges.total_fulfilled|default:"0" }}</div>
+      <div class="kpi-label">Total Fulfilled</div>
+    </div>
+  </div>
+
+  <!-- Recent Attendance History -->
+  <div class="section-title">Recent Attendance Records</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 25%;">Meeting / Service</th>
+        <th style="width: 25%;">Date</th>
+        <th style="width: 25%;">Time</th>
+        <th style="width: 25%;">Check-In Method</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for att in attendance_stats.recent_records %}
+        <tr>
+          <td><strong>{{ att.meeting_name|default:att.service }}</strong></td>
+          <td>{{ att.mdate|date:"M j, Y"|default:"—" }}</td>
+          <td>{{ att.check_in_time|date:"H:i A"|default:"Recorded" }}</td>
+          <td><span class="badge badge-info">{{ att.method|default:"Kiosk / Manual" }}</span></td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4" style="text-align: center; color: var(--text-muted);">No recent attendance logs available.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Pledges & Partnership Records -->
+  {% if pledges.items %}
+    <div class="section-title">Partnership &amp; Pledges Ledger</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width: 35%;">Campaign / Cause</th>
+          <th style="width: 20%;">Pledged</th>
+          <th style="width: 20%;">Fulfilled</th>
+          <th style="width: 25%;">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in pledges.items %}
+          <tr>
+            <td><strong>{{ p.campaign_name|default:p.title }}</strong></td>
+            <td>{{ branding.currency_symbol }} {{ p.pledged_amount|default:0 }}</td>
+            <td>{{ branding.currency_symbol }} {{ p.fulfilled_amount|default:0 }}</td>
+            <td>
+              {% if p.status == "completed" or p.fulfilled_amount >= p.pledged_amount %}
+                <span class="badge badge-success">Fulfilled</span>
+              {% else %}
+                <span class="badge badge-warning">Active Pledge</span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

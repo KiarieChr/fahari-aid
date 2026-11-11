@@ -1,0 +1,77 @@
+.authentication-wrapper{
+   
+    background-image:linear-gradient(to right, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%),
+    url('../../img/builders.jpeg');
+
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+.auth-form{
+    background: #f8f8f8;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-top:2rem;
+    margin-bottom:3rem;
+    border-radius: 0 10px 10px 0;
+}
+.login-form{
+    margin: 5rem;
+    border-radius: 10px;
+}
+.app-brand{
+    margin-top: 50%;
+    
+}
+.tag-line-text{
+    font-size: 13px;
+    
+}
+.sm-display{
+    display: none;
+}
+.content .app-brand{
+    margin-top: 2rem!important;
+}
+@media (max-width:1600px){
+    .authentication-wrapper{
+        max-width: 1600px;
+    }
+}
+@media(max-width:1366px){
+    .authentication-wrapper{
+        max-width: 1366px;
+    }
+
+}
+@media(max-width:992px){
+    .authentication-wrapper{
+        max-width: 1200px;
+    }
+}
+@media(max-width:512px){
+    .sm-none{
+        display: none;
+    }
+    .sm-display{
+        display: contents;
+    }
+    
+    .login-form{
+        margin-top: 10rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        border-radius: 10px;
+        
+    }
+    .auth-form{
+        margin-top: 10rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        border-radius: 10px;
+    }
+
+}

@@ -1,0 +1,69 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Attendance Report — {{ event.ename|default:"Event" }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">{{ event.ename|default:"Event Attendance & Registration" }}</h2>
+  <p class="doc-subtitle">
+    <strong>Dates:</strong> {{ event.start_date|date:"M j, Y"|default:"TBD" }}
+    {% if event.end_date %} to {{ event.end_date|date:"M j, Y" }}{% endif %} &bull;
+    <strong>Location:</strong> {{ event.branch|default:event.location|default:"Main Campus / Sanctuary" }} &bull;
+    <strong>Type:</strong> {{ event.type|default:"General Event" }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  <!-- Registration & Check-in KPI Strip -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">{{ total_registered|default:registrations|length|default:0 }}</div>
+      <div class="kpi-label">Total Registered</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: #16a34a;">{{ total_checked_in|default:0 }}</div>
+      <div class="kpi-label">Checked In</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ checkin_rate|default:"0" }}%</div>
+      <div class="kpi-label">Attendance Rate</div>
+    </div>
+  </div>
+
+  <!-- Attendee Table -->
+  <div class="section-title">Registration &amp; Check-In Roll</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 32%;">Attendee Name</th>
+        <th style="width: 20%;">Phone Number</th>
+        <th style="width: 18%;">Category / Type</th>
+        <th style="width: 25%;">Check-In Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reg in registrations %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><strong>{{ reg.names|default:"Anonymous" }}</strong></td>
+          <td>{{ reg.phone|default:"—" }}</td>
+          <td>{{ reg.category|default:"General" }}</td>
+          <td>
+            {% if reg.checked_in or reg.attendance_id or reg.check_in_time %}
+              <span class="badge badge-success">Checked In</span>
+              <span style="font-size: 7.5pt; color: var(--text-muted); margin-left: 4px;">
+                {{ reg.check_in_time|date:"H:i"|default:"" }}
+              </span>
+            {% else %}
+              <span class="badge badge-warning">Registered (Absent)</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 14px;">No registrations recorded for this event.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

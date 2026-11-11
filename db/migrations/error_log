@@ -1,0 +1,25 @@
+[07-Apr-2026 13:16:21 UTC] PHP Warning:  require_once(/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php): Failed to open stream: No such file or directory in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:16:21 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:16:52 UTC] PHP Warning:  require_once(/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php): Failed to open stream: No such file or directory in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:16:52 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:25:51 UTC] PHP Warning:  require_once(/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php): Failed to open stream: No such file or directory in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:25:51 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:26:08 UTC] PHP Warning:  require_once(/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php): Failed to open stream: No such file or directory in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:26:08 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/../includes/connection.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:29:04 UTC] PHP Warning:  require_once(/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations../../includes/connection.php): Failed to open stream: No such file or directory in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8
+[07-Apr-2026 13:29:04 UTC] PHP Fatal error:  Uncaught Error: Failed opening required '/home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations../../includes/connection.php' (include_path='.:/opt/cpanel/ea-php81/root/usr/share/pear') in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php:8
+Stack trace:
+#0 {main}
+  thrown in /home/nprfojqc/jen.royalsoftwares.co.ke/db/migrations/005_standardize_event_types.php on line 8

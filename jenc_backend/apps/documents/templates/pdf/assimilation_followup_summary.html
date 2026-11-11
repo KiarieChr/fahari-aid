@@ -1,0 +1,77 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Assimilation & Follow-up Report — {{ branding.short_name }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">Assimilation &amp; Member Care Follow-Up Summary</h2>
+  <p class="doc-subtitle">
+    <strong>Period:</strong> {{ summary_data.period_label|default:"Active Quarter" }} &bull;
+    <strong>Pastoral Care Pipeline &amp; Contact Status</strong>
+  </p>
+{% endblock %}
+
+{% block content %}
+  <!-- Assimilation KPI Pipeline -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">{{ summary_data.total_new_converts|default:0 }}</div>
+      <div class="kpi-label">Total First-Time / Converts</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: #16a34a;">{{ summary_data.completed_followups|default:0 }}</div>
+      <div class="kpi-label">Follow-Ups Completed</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: #dc2626;">{{ summary_data.pending_followups|default:0 }}</div>
+      <div class="kpi-label">Pending / In Progress</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ summary_data.conversion_rate|default:"0" }}%</div>
+      <div class="kpi-label">Integration Rate</div>
+    </div>
+  </div>
+
+  <!-- Priority Follow-Up Table -->
+  <div class="section-title">Pending &amp; In-Progress Follow-Up Roster</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 5%;">#</th>
+        <th style="width: 25%;">Convert / Visitor Name</th>
+        <th style="width: 18%;">Phone Contact</th>
+        <th style="width: 20%;">Assigned Minister</th>
+        <th style="width: 18%;">Pipeline Stage</th>
+        <th style="width: 14%;">Last Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in followup_list %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <strong>{{ item.name|default:"Anonymous Visitor" }}</strong>
+            {% if item.residence %}
+              <div style="font-size: 7.5pt; color: var(--text-muted);">{{ item.residence }}</div>
+            {% endif %}
+          </td>
+          <td>{{ item.phone|default:"—" }}</td>
+          <td>{{ item.assigned_to|default:"Unassigned" }}</td>
+          <td>
+            {% if item.stage == "contacted" or item.status == "Contacted" %}
+              <span class="badge badge-info">Contacted</span>
+            {% elif item.stage == "completed" or item.status == "Completed" %}
+              <span class="badge badge-success">Completed</span>
+            {% else %}
+              <span class="badge badge-warning">Needs Follow-Up</span>
+            {% endif %}
+          </td>
+          <td>{{ item.last_contact_date|date:"M j, Y"|default:"Never" }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 14px;">No members currently requiring pastoral follow-up.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

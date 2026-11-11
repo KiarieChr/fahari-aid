@@ -1,0 +1,58 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Schedule Timetable — {{ event.ename|default:"Event" }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">{{ event.ename|default:"Event Program & Schedule" }}</h2>
+  <p class="doc-subtitle">
+    <strong>Event Dates:</strong> {{ event.start_date|date:"M j, Y"|default:"TBD" }}
+    {% if event.end_date %} to {{ event.end_date|date:"M j, Y" }}{% endif %} &bull;
+    <strong>Venue:</strong> {{ event.branch|default:"Main Auditorium" }}
+  </p>
+{% endblock %}
+
+{% block content %}
+  {% if schedule %}
+    {% for item in schedule %}
+      <div style="margin-bottom: 22px;">
+        <div class="section-title" style="background: var(--bg-muted); padding: 5px 10px; border-radius: 4px;">
+          Day {{ item.day_number|default:forloop.counter }}{% if item.date_display %}: {{ item.date_display }}{% elif item.date %}: {{ item.date|date:"l, F j, Y" }}{% endif %}
+        </div>
+        
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Time Window</th>
+              <th style="width: 32%;">Session / Activity</th>
+              <th style="width: 25%;">Speaker / Facilitator</th>
+              <th style="width: 25%;">Venue / Room</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for session in item.sessions %}
+              <tr>
+                <td><strong>{{ session.start_time|default:"TBD" }} - {{ session.end_time|default:"TBD" }}</strong></td>
+                <td>
+                  <strong>{{ session.title|default:"Session" }}</strong>
+                  {% if session.description %}
+                    <div style="font-size: 8pt; color: var(--text-muted); margin-top: 2px;">{{ session.description }}</div>
+                  {% endif %}
+                </td>
+                <td>{{ session.speaker|default:"—" }}</td>
+                <td>{{ session.venue|default:"Main Hall" }}</td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="4" style="text-align: center; color: var(--text-muted);">No specific sessions scheduled for this day.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="text-align: center; color: var(--text-muted); padding: 24px; border: 1px dashed var(--border); border-radius: 8px;">
+      No schedule or session timetable has been generated for this event.
+    </p>
+  {% endif %}
+{% endblock %}

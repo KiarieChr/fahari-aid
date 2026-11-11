@@ -1,0 +1,113 @@
+{% extends "pdf/base_document.html" %}
+
+{% block title %}Demographics & Analytics — {{ event.ename|default:"Event" }}{% endblock %}
+
+{% block doc_header %}
+  <h2 class="doc-title">{{ event.ename|default:"Event Demographics & Analytics" }}</h2>
+  <p class="doc-subtitle">
+    <strong>Event:</strong> {{ event.ename|default:"All Registered Attendees" }} &bull;
+    <strong>Date:</strong> {{ event.start_date|date:"M j, Y"|default:"TBD" }} &bull;
+    <strong>Audience Intelligence Report</strong>
+  </p>
+{% endblock %}
+
+{% block content %}
+  <!-- Overview Metrics -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-value">{{ analytics_data.total_registered|default:0 }}</div>
+      <div class="kpi-label">Total Registered</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value" style="color: #16a34a;">{{ analytics_data.total_attended|default:0 }}</div>
+      <div class="kpi-label">Total Attended</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">{{ analytics_data.turnout_rate|default:"0" }}%</div>
+      <div class="kpi-label">Turnout Rate</div>
+    </div>
+  </div>
+
+  <!-- Gender Breakdown -->
+  <div class="section-title">Gender Distribution</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 40%;">Gender Classification</th>
+        <th style="width: 30%;">Attendee Count</th>
+        <th style="width: 30%;">Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in analytics_data.gender_breakdown %}
+        <tr>
+          <td><strong>{{ item.gender|default:item.label }}</strong></td>
+          <td>{{ item.count }}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+                <div style="width: {{ item.percentage }}%; height: 100%; background: var(--primary);"></div>
+              </div>
+              <span style="font-weight: 600; font-size: 8pt;">{{ item.percentage }}%</span>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No gender demographic data recorded.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Category Breakdown -->
+  <div class="section-title">Registration Categories</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th style="width: 40%;">Attendee Category</th>
+        <th style="width: 30%;">Count</th>
+        <th style="width: 30%;">Proportion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in analytics_data.category_breakdown %}
+        <tr>
+          <td><strong>{{ item.category|default:item.label }}</strong></td>
+          <td>{{ item.count }}</td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="flex: 1; height: 7px; background: #e2e8f0; border-radius: 4px; overflow: hidden;">
+                <div style="width: {{ item.percentage }}%; height: 100%; background: var(--accent);"></div>
+              </div>
+              <span style="font-weight: 600; font-size: 8pt;">{{ item.percentage }}%</span>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No category data recorded.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Residence / Region Breakdown -->
+  {% if analytics_data.residence_breakdown %}
+    <div class="section-title">Regional / Residence Distribution</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th style="width: 50%;">Location / Residence Area</th>
+          <th style="width: 25%;">Registrations</th>
+          <th style="width: 25%;">Percentage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in analytics_data.residence_breakdown %}
+          <tr>
+            <td><strong>{{ item.residence|default:item.label }}</strong></td>
+            <td>{{ item.count }}</td>
+            <td>{{ item.percentage }}%</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+{% endblock %}

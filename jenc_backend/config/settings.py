@@ -81,15 +81,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+import os
+
+DB_NAME = os.environ.get('DB_NAME', os.environ.get('PGDATABASE', 'jendb'))
+DB_USER = os.environ.get('DB_USER', os.environ.get('PGUSER', 'postgres'))
+DB_PASSWORD = os.environ.get('DB_PASSWORD', os.environ.get('PGPASSWORD', '6820'))
+DB_HOST = os.environ.get('DB_HOST', os.environ.get('PGHOST', 'localhost'))
+DB_PORT = os.environ.get('DB_PORT', os.environ.get('PGPORT', '5432'))
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'jendb',
-        'USER': 'postgres',
-        'PASSWORD': '6820',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': DB_NAME,
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOST,
+        'PORT': str(DB_PORT),
     }
 }
 
@@ -141,6 +148,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

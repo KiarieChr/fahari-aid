@@ -1,0 +1,25 @@
+[Unit]
+Description=Fahari Ledger Pro Portal (portal.jesusenthroned.org)
+After=network.target gunicorn_jesusenthroned.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/jesusenthroned/fahari-ledger-pro
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+Environment="HOST=127.0.0.1"
+Environment="VITE_API_BASE=https://jesusenthroned.org/api"
+
+# Runs the production SSR server or Vite preview on port 3000
+ExecStart=/usr/bin/npm run preview -- --port 3000 --host 127.0.0.1
+
+Restart=on-failure
+RestartSec=5s
+StandardOutput=append:/var/log/fahari_portal.log
+StandardError=append:/var/log/fahari_portal_err.log
+
+[Install]
+WantedBy=multi-user.target
+

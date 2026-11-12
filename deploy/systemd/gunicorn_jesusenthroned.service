@@ -1,0 +1,47 @@
+[Unit]
+Description=Gunicorn daemon for Jesus Enthroned Church (jenc_backend)
+After=network.target postgresql.service
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/jesusenthroned/jenc_backend
+EnvironmentFile=-/var/www/jesusenthroned/jenc_backend/.env
+Environment="DJANGO_SETTINGS_MODULE=config.settings_production"
+Environment="PYTHONUNBUFFERED=1"
+Environment="PGPORT=5433"
+Environment="PGHOST=localhost"
+Environment="PGUSER=postgres"
+Environment="PGDATABASE=jendb"
+Environment="PGPASSWORD=Admin @2025"
+Environment="DB_PORT=5433"
+Environment="DB_HOST=localhost"
+Environment="DB_USER=postgres"
+Environment="DB_NAME=jendb"
+Environment="DB_PASSWORD=Admin @2025"
+
+ExecStart=/var/www/jesusenthroned/jenc_backend/venv/bin/gunicorn \
+    --workers 3 \
+    --threads 2 \
+    --worker-class gthread \
+    --bind 127.0.0.1:8000 \
+    --timeout 120 \
+    --access-logfile /var/log/gunicorn/jesusenthroned_access.log \
+    --error-logfile /var/log/gunicorn/jesusenthroned_error.log \
+    config.wsgi:application
+
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=15
+Restart=on-failure
+RestartSec=5s
+
+# Security sandboxing
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=true
+
+[Install]
+WantedBy=multi-user.target
+

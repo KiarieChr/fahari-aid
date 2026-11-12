@@ -4,7 +4,7 @@ import { apiCall } from "@/api/client";
 import { EventDetailShell } from "@/components/events/EventDetailShell";
 import type { EventLookups, EventsSearchParams } from "@/components/events/types";
 
-export const Route = createFileRoute("/events/$eventId" as any)({
+export const Route = createFileRoute("/events/$eventId")({
   head: () => ({
     meta: [
       { title: "Event Workspace — J.E.N Church ERP" },

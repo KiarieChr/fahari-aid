@@ -29,6 +29,7 @@ import { Route as CellsRouteImport } from './routes/cells'
 import { Route as AssimilationRouteImport } from './routes/assimilation'
 import { Route as AccountingRouteImport } from './routes/accounting'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EventsEventIdRouteImport } from './routes/events.$eventId'
 
 const TrainingRoute = TrainingRouteImport.update({
   id: '/training',
@@ -130,13 +131,18 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EventsEventIdRoute = EventsEventIdRouteImport.update({
+  id: '/$eventId',
+  path: '/$eventId',
+  getParentRoute: () => EventsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounting': typeof AccountingRoute
   '/assimilation': typeof AssimilationRoute
   '/cells': typeof CellsRoute
-  '/events': typeof EventsRoute
+  '/events': typeof EventsRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
@@ -152,13 +158,14 @@ export interface FileRoutesByFullPath {
   '/savings': typeof SavingsRoute
   '/settings': typeof SettingsRoute
   '/training': typeof TrainingRoute
+  '/events/$eventId': typeof EventsEventIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounting': typeof AccountingRoute
   '/assimilation': typeof AssimilationRoute
   '/cells': typeof CellsRoute
-  '/events': typeof EventsRoute
+  '/events': typeof EventsRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
@@ -174,6 +181,7 @@ export interface FileRoutesByTo {
   '/savings': typeof SavingsRoute
   '/settings': typeof SettingsRoute
   '/training': typeof TrainingRoute
+  '/events/$eventId': typeof EventsEventIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -181,7 +189,7 @@ export interface FileRoutesById {
   '/accounting': typeof AccountingRoute
   '/assimilation': typeof AssimilationRoute
   '/cells': typeof CellsRoute
-  '/events': typeof EventsRoute
+  '/events': typeof EventsRouteWithChildren
   '/forgot-password': typeof ForgotPasswordRoute
   '/leadership': typeof LeadershipRoute
   '/loans': typeof LoansRoute
@@ -197,6 +205,7 @@ export interface FileRoutesById {
   '/savings': typeof SavingsRoute
   '/settings': typeof SettingsRoute
   '/training': typeof TrainingRoute
+  '/events/$eventId': typeof EventsEventIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/savings'
     | '/settings'
     | '/training'
+    | '/events/$eventId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,6 +253,7 @@ export interface FileRouteTypes {
     | '/savings'
     | '/settings'
     | '/training'
+    | '/events/$eventId'
   id:
     | '__root__'
     | '/'
@@ -265,6 +276,7 @@ export interface FileRouteTypes {
     | '/savings'
     | '/settings'
     | '/training'
+    | '/events/$eventId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -272,7 +284,7 @@ export interface RootRouteChildren {
   AccountingRoute: typeof AccountingRoute
   AssimilationRoute: typeof AssimilationRoute
   CellsRoute: typeof CellsRoute
-  EventsRoute: typeof EventsRoute
+  EventsRoute: typeof EventsRouteWithChildren
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LeadershipRoute: typeof LeadershipRoute
   LoansRoute: typeof LoansRoute
@@ -432,15 +444,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/events/$eventId': {
+      id: '/events/$eventId'
+      path: '/$eventId'
+      fullPath: '/events/$eventId'
+      preLoaderRoute: typeof EventsEventIdRouteImport
+      parentRoute: typeof EventsRoute
+    }
   }
 }
+
+interface EventsRouteChildren {
+  EventsEventIdRoute: typeof EventsEventIdRoute
+}
+
+const EventsRouteChildren: EventsRouteChildren = {
+  EventsEventIdRoute: EventsEventIdRoute,
+}
+
+const EventsRouteWithChildren =
+  EventsRoute._addFileChildren(EventsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountingRoute: AccountingRoute,
   AssimilationRoute: AssimilationRoute,
   CellsRoute: CellsRoute,
-  EventsRoute: EventsRoute,
+  EventsRoute: EventsRouteWithChildren,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LeadershipRoute: LeadershipRoute,
   LoansRoute: LoansRoute,

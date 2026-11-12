@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+html[data-theme="dark"] {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: dark;
+
+  /* Default Dark Mode Variables (Portal Theme) */
+  --bg-color: #120D20;
+  --background: #120D20;
+  /* Deep Purple/Black */
+  --surface-1: #1A1625;
+  /* Card Background */
+  --surface-2: #2a2438;
+  /* Lighter Surface */
+
+  --text-color: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --primary: #22c1e6;
+  /* Cyan */
+  --secondary: #a855f7;
+  /* Purple */
+
+  --nav-bg: #120D20;
+  --border-color: rgba(255, 255, 255, 0.05);
+
+  --card-bg: #1A1625;
+  --btn-text: white;
+  --btn-bg: #2a2438;
+
+  color: var(--text-color);
+  background-color: var(--bg-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html[data-theme="light"],
+body[data-theme="light"] {
+  color-scheme: light !important;
+  --bg-color: #f1f5f9 !important;
+  /* Slate 100 */
+  --surface-1: #ffffff !important;
+  --surface-2: #e2e8f0 !important;
+
+  --text-color: #0f172a !important;
+  /* Slate 900 */
+  --text-muted: #64748b !important;
+  /* Slate 500 */
+
+  --primary: #0ea5e9 !important;
+  /* Sky 500 */
+  --secondary: #9333ea !important;
+  /* Purple 600 */
+
+  --nav-bg: #ffffff !important;
+  --border-color: rgba(0, 0, 0, 0.1) !important;
+
+  --card-bg: #ffffff !important;
+  --btn-text: #0f172a !important;
+  --btn-bg: #e2e8f0 !important;
+}
+
+a {
+  font-weight: 500;
+  color: var(--primary);
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--secondary);
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: var(--text-color);
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  border-color: var(--primary);
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Button Styles */
+.btn-hover-effect {
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(to right, #22c1e6, #a855f7);
+}
+
+/* Premium UI Utilities */
+.glass-card {
+  background: rgba(255, 255, 255, 0.03) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+.premium-bg {
+  position: relative;
+  overflow: hidden;
+  background: #0f172a;
+}
+
+.premium-bg::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(34, 193, 230, 0.05) 0%, transparent 60%),
+    radial-gradient(circle at 70% 30%, rgba(168, 85, 247, 0.05) 0%, transparent 60%);
+  animation: rotateBg 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotateBg {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.portal-container {
+  position: relative;
+  z-index: 1;
+}
+
+.success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.premium-toast {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 2000;
+  padding: 1px;
+  /* For gradient border */
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  animation: slideRightIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 90vw;
+  width: 400px;
+}
+
+.toast-content {
+  background: #1e1b4b;
+  /* Deep indigo/midnight */
+  border-radius: 1.2rem;
+  padding: 1.25rem 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: white;
+}
+
+@keyframes slideRightIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes progressShrink {
+  from {
+    width: 100%;
+  }
+
+  to {
+    width: 0%;
+  }
+}
+
+.toast-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--primary);
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  animation: progressShrink 2s linear forwards;
+}

@@ -3,8 +3,12 @@ __pycache__/
 *.pyc
 *.sqlite3
 .env
-media/
-staticfiles/
+# Only ignore upload media directories, not React source components
+/media/
+/uploads/
+/jenc_backend/media/
+/staticfiles/
+/jenc_backend/staticfiles/
 venv/
 dist/
 error_log

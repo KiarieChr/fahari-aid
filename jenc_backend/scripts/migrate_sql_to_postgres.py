@@ -162,6 +162,31 @@ def find_default_dump() -> Path | None:
     return None
 
 
+def ensure_database_exists(args):
+    """Ensure target database exists, creating it via postgres maintenance DB if needed."""
+    from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+    try:
+        m_conn = psycopg2.connect(
+            host=args.host,
+            port=args.port,
+            user=args.user,
+            password=args.password,
+            dbname='postgres'
+        )
+        m_conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        with m_conn.cursor() as cur:
+            cur.execute("SELECT 1 FROM pg_database WHERE datname = %s;", (args.dbname,))
+            if not cur.fetchone():
+                print(f">>> Database '{args.dbname}' does not exist on {args.host}:{args.port}. Creating it...")
+                cur.execute(f'CREATE DATABASE "{args.dbname}" WITH OWNER = %s ENCODING = \'UTF8\';', (args.user,))
+                print(f"✓ Database '{args.dbname}' created successfully.")
+            else:
+                print(f"✓ Database '{args.dbname}' verified.")
+        m_conn.close()
+    except Exception as e:
+        print(f"Notice on database pre-check: {e}")
+
+
 def main():
     args = parse_args()
 
@@ -183,6 +208,9 @@ def main():
     print(f" Target Host : {args.host}:{args.port}")
     print(f" Database    : {args.dbname} (User: {args.user})")
     print("==================================================================")
+
+    # Automatically ensure the database exists before connecting to it
+    ensure_database_exists(args)
 
     try:
         conn = psycopg2.connect(

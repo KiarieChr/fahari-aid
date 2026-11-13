@@ -148,6 +148,78 @@ ensure_modern_node() {
     fi
 }
 
+# Ensure PostgreSQL target database exists (port 5433, user postgres)
+ensure_database_exists() {
+    echo ">>> Ensuring PostgreSQL database '${PGDATABASE}' exists on ${PGHOST}:${PGPORT}..."
+
+    # Method 1: psql CLI check against postgres maintenance db
+    if command -v psql &>/dev/null; then
+        if PGPASSWORD="${PGPASSWORD}" psql -h "${PGHOST}" -p "${PGPORT}" -U "${PGUSER}" -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='${PGDATABASE}';" 2>/dev/null | grep -q 1; then
+            echo "✓ PostgreSQL database '${PGDATABASE}' already exists."
+            return 0
+        else
+            echo ">>> Database '${PGDATABASE}' not found. Creating '${PGDATABASE}' via psql..."
+            if PGPASSWORD="${PGPASSWORD}" psql -h "${PGHOST}" -p "${PGPORT}" -U "${PGUSER}" -d postgres -c "CREATE DATABASE \"${PGDATABASE}\" WITH OWNER = \"${PGUSER}\" ENCODING = 'UTF8';" 2>/dev/null; then
+                echo "✓ Created PostgreSQL database '${PGDATABASE}' successfully."
+                return 0
+            else
+                echo "Notice: psql CREATE DATABASE had notices, testing Python fallback..."
+            fi
+        fi
+    fi
+
+    # Method 2: Python psycopg2 check inside backend venv
+    local PY_EXEC=""
+    if [ -f "${BACKEND_DIR}/venv/bin/python" ]; then
+        PY_EXEC="${BACKEND_DIR}/venv/bin/python"
+    elif command -v python3 &>/dev/null; then
+        PY_EXEC="python3"
+    elif command -v python &>/dev/null; then
+        PY_EXEC="python"
+    fi
+
+    if [ -n "$PY_EXEC" ]; then
+        "$PY_EXEC" - << 'EOF'
+import os
+import sys
+
+db_name = os.environ.get("PGDATABASE", "jendb")
+db_user = os.environ.get("PGUSER", "postgres")
+db_pass = os.environ.get("PGPASSWORD", "Admin @2025")
+db_host = os.environ.get("PGHOST", "localhost")
+db_port = int(os.environ.get("PGPORT", "5433"))
+
+try:
+    import psycopg2
+    from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+except ImportError:
+    # psycopg2 might not yet be installed if called before pip install
+    sys.exit(0)
+
+try:
+    conn = psycopg2.connect(
+        dbname="postgres",
+        user=db_user,
+        password=db_pass,
+        host=db_host,
+        port=db_port
+    )
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    with conn.cursor() as cur:
+        cur.execute("SELECT 1 FROM pg_database WHERE datname = %s;", (db_name,))
+        if not cur.fetchone():
+            print(f">>> Creating database '{db_name}' on {db_host}:{db_port}...")
+            cur.execute(f'CREATE DATABASE "{db_name}" WITH OWNER = "{db_user}" ENCODING = \'UTF8\';')
+            print(f"✓ Database '{db_name}' created successfully via Python psycopg2.")
+        else:
+            print(f"✓ Database '{db_name}' verified.")
+    conn.close()
+except Exception as e:
+    print(f"Notice: PostgreSQL database check: {e}")
+EOF
+    fi
+}
+
 # Sync Git repository with conflict auto-resolution & unrelated histories support
 sync_repository() {
     local REPO_DIR="$1"
@@ -212,8 +284,10 @@ ensure_modern_venv
 ensure_modern_node
 
 # ------------------------------------------------------------------------------
-# 5. PRE-DEPLOYMENT DATABASE BACKUP (PostgreSQL on Port 5433)
+# 5. PRE-DEPLOYMENT DATABASE BACKUP & EXISTENCE CHECK (PostgreSQL on Port 5433)
 # ------------------------------------------------------------------------------
+ensure_database_exists
+
 echo ">>> Taking pre-deployment PostgreSQL database backup on port ${PGPORT}..."
 mkdir -p "${BACKUP_DIR}"
 TIMESTAMP=$(date '+%Y%m%d_%H%M%S')
@@ -257,8 +331,9 @@ if [ -f "package.json" ]; then
 fi
 
 # ------------------------------------------------------------------------------
-# 8. DATABASE MIGRATIONS
+# 8. DATABASE MIGRATIONS (Django Models Installation)
 # ------------------------------------------------------------------------------
+ensure_database_exists
 echo ">>> Running Django database migrations on PostgreSQL (port ${PGPORT})..."
 cd "${BACKEND_DIR}"
 venv/bin/python manage.py migrate --noinput

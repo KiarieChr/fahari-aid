@@ -151,7 +151,7 @@ sudo certbot --nginx \
     -d jesusenthroned.org \
     -d www.jesusenthroned.org \
     -d portal.jesusenthroned.org \
-    -d porta.jesusenthroned.org
+    -d portal.jesusenthroned.org
 
 # Certbot will automatically configure HTTPS redirects and renewals in Nginx!
 ```

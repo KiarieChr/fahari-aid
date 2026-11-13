@@ -7,3 +7,7 @@ media/
 staticfiles/
 venv/
 dist/
+error_log
+*.log
+backups/
+node_modules/

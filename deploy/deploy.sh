@@ -398,6 +398,13 @@ if systemctl list-unit-files | grep -q "fahari_portal.service"; then
     echo "✓ Restarted fahari_portal.service"
 fi
 
+# Update and enable Nginx site configuration
+if [ -d "/etc/nginx/sites-available" ] && [ -f "${PROJECT_DIR}/deploy/nginx/jesusenthroned.conf" ]; then
+    echo ">>> Installing and enabling Nginx virtualhost configuration..."
+    cp "${PROJECT_DIR}/deploy/nginx/jesusenthroned.conf" /etc/nginx/sites-available/jesusenthroned.conf
+    ln -sf /etc/nginx/sites-available/jesusenthroned.conf /etc/nginx/sites-enabled/jesusenthroned.conf
+fi
+
 # Hot reload Nginx after configuration test
 if command -v nginx &>/dev/null; then
     echo ">>> Testing and reloading Nginx..."

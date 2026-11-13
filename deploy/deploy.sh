@@ -369,8 +369,8 @@ venv/bin/python manage.py collectstatic --noinput
 # 11. NORMALIZE LINUX PERMISSIONS (www-data)
 # ------------------------------------------------------------------------------
 echo ">>> Normalizing directory permissions for www-data..."
-mkdir -p /var/log/gunicorn
-chown -R www-data:www-data /var/log/gunicorn 2>/dev/null || true
+mkdir -p /var/log/gunicorn /var/www/certbot
+chown -R www-data:www-data /var/log/gunicorn /var/www/certbot 2>/dev/null || true
 
 for target_dir in \
     "${BACKEND_DIR}/media" \

@@ -14,12 +14,12 @@ Environment="PGPORT=5433"
 Environment="PGHOST=localhost"
 Environment="PGUSER=postgres"
 Environment="PGDATABASE=jendb"
-Environment="PGPASSWORD=Admin @2025"
+Environment="PGPASSWORD=Admin@2025"
 Environment="DB_PORT=5433"
 Environment="DB_HOST=localhost"
 Environment="DB_USER=postgres"
 Environment="DB_NAME=jendb"
-Environment="DB_PASSWORD=Admin @2025"
+Environment="DB_PASSWORD=Admin@2025"
 
 ExecStart=/var/www/jesusenthroned/jenc_backend/venv/bin/gunicorn \
     --workers 3 \

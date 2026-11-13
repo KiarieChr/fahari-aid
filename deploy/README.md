@@ -4,7 +4,7 @@ This directory contains the production deployment automation for:
 - **Main Website & Member Portal**: `https://jesusenthroned.org` and `https://www.jesusenthroned.org`
 - **Accounting & ERP Portal**: `https://portal.jesusenthroned.org` (and `https://porta.jesusenthroned.org`)
 - **Backend API (Django REST Framework)**: `https://jesusenthroned.org/api/`
-- **Database**: PostgreSQL on **Port 5433** with user `postgres` and password `Admin @2025`
+- **Database**: PostgreSQL on **Port 5433** with user `postgres` and password `Admin@2025`
 
 ---
 
@@ -27,7 +27,7 @@ This directory contains the production deployment automation for:
                                                             PostgreSQL (Port 5433)
                                                             Database: jendb
                                                             User: postgres
-                                                            Password: Admin @2025
+                                                            Password: Admin@2025
 ```
 
 ---
@@ -61,8 +61,8 @@ python3 -V # Must be >= 3.10 (e.g. 3.11 or 3.12)
 If your PostgreSQL is running on standard port 5432, you can configure a cluster or instance on **port 5433**:
 
 ```bash
-# Set postgres password to 'Admin @2025' and create jendb database
-sudo -u postgres psql -p 5433 -c "ALTER USER postgres WITH PASSWORD 'Admin @2025';"
+# Set postgres password to 'Admin@2025' and create jendb database
+sudo -u postgres psql -p 5433 -c "ALTER USER postgres WITH PASSWORD 'Admin@2025';"
 sudo -u postgres psql -p 5433 -c "CREATE DATABASE jendb OWNER postgres;"
 
 # If PostgreSQL is listening on 5432, you can change the port in /etc/postgresql/<version>/main/postgresql.conf:
@@ -166,7 +166,7 @@ If you need to run or re-run the MySQL/phpMyAdmin data migration independently:
 cd /var/www/jesusenthroned/jenc_backend
 source venv/bin/activate
 
-# Uses default port 5433 and password 'Admin @2025'
-python scripts/migrate_sql_to_postgres.py ../db/nprfojqc_jenc_cleaned.sql --port 5433 --password "Admin @2025"
+# Uses default port 5433 and password 'Admin@2025'
+python scripts/migrate_sql_to_postgres.py ../db/nprfojqc_jenc_cleaned.sql --port 5433 --password "Admin@2025"
 ```
 

@@ -33,10 +33,10 @@ if extra_hosts:
         if h_clean and h_clean not in ALLOWED_HOSTS:
             ALLOWED_HOSTS.append(h_clean)
 
-# Database Configuration (PostgreSQL on port 5433 with password 'Admin @2025')
+# Database Configuration (PostgreSQL on port 5433 with password 'Admin@2025')
 DB_NAME = os.environ.get('DB_NAME', os.environ.get('PGDATABASE', 'jendb'))
 DB_USER = os.environ.get('DB_USER', os.environ.get('PGUSER', 'postgres'))
-DB_PASSWORD = os.environ.get('DB_PASSWORD', os.environ.get('PGPASSWORD', 'Admin @2025'))
+DB_PASSWORD = os.environ.get('DB_PASSWORD', os.environ.get('PGPASSWORD', 'Admin@2025'))
 DB_HOST = os.environ.get('DB_HOST', os.environ.get('PGHOST', 'localhost'))
 DB_PORT = os.environ.get('DB_PORT', os.environ.get('PGPORT', '5433'))
 

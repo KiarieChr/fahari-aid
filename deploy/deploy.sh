@@ -54,7 +54,7 @@ elif [ -f "${PROJECT_DIR}/.env" ]; then
     set +a
 fi
 
-# PostgreSQL Database Credentials (Default: Port 5433, Password 'Admin @2025')
+# PostgreSQL Database Credentials (Default: Port 5433, Password 'Admin@2025')
 export PGPORT="${DB_PORT:-5433}"
 export PGHOST="${DB_HOST:-localhost}"
 export PGUSER="${DB_USER:-postgres}"
@@ -64,7 +64,7 @@ if [ -n "${DB_PASSWORD:-}" ]; then
 elif [ -n "${POSTGRES_PASSWORD:-}" ]; then
     export PGPASSWORD="${POSTGRES_PASSWORD}"
 else
-    export PGPASSWORD="Admin @2025"
+    export PGPASSWORD="Admin@2025"
 fi
 
 # Export corresponding DB_* variables for Django
@@ -185,7 +185,7 @@ import sys
 
 db_name = os.environ.get("PGDATABASE", "jendb")
 db_user = os.environ.get("PGUSER", "postgres")
-db_pass = os.environ.get("PGPASSWORD", "Admin @2025")
+db_pass = os.environ.get("PGPASSWORD", os.environ.get("DB_PASSWORD", "Admin@2025"))
 db_host = os.environ.get("PGHOST", "localhost")
 db_port = int(os.environ.get("PGPORT", "5433"))
 

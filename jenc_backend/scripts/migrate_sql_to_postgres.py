@@ -6,7 +6,7 @@ Automated script to migrate MySQL / phpMyAdmin SQL dump data to PostgreSQL
 for Jesus Enthroned Church (jenc_backend).
 ==============================================================================
 - Default PostgreSQL Port: 5433 (or via PGPORT / DB_PORT)
-- Default Password: Admin @2025 (or via PGPASSWORD / DB_PASSWORD)
+- Default Password: Admin@2025 (or via PGPASSWORD / DB_PASSWORD)
 - Normalizes MySQL escaping, zero-dates, boolean casting
 - Bypasses foreign key order constraints using session_replication_role
 - Inserts with ON CONFLICT DO NOTHING to avoid duplicate key errors
@@ -58,8 +58,8 @@ def parse_args():
     )
     parser.add_argument(
         '--password',
-        default=os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD', 'Admin @2025')),
-        help="Postgres password (default: 'Admin @2025')"
+        default=os.environ.get('PGPASSWORD', os.environ.get('DB_PASSWORD', 'Admin@2025')),
+        help="Postgres password (default: 'Admin@2025')"
     )
     parser.add_argument(
         '--dbname',
@@ -199,7 +199,7 @@ def main():
     if not dump_path or not dump_path.exists():
         sys.exit(
             "Error: No SQL dump file provided or found.\n"
-            "Usage: python migrate_sql_to_postgres.py <path_to_dump.sql> [--port 5433] [--password 'Admin @2025']"
+            "Usage: python migrate_sql_to_postgres.py <path_to_dump.sql> [--port 5433] [--password 'Admin@2025']"
         )
 
     print("==================================================================")
